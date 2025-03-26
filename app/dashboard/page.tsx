@@ -167,10 +167,10 @@ export default function Dashboard() {
         <TabsContent value="health" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Health Metrics Overview</CardTitle>
-              <CardDescription>Track your key health metrics over time</CardDescription>
+              <CardTitle className="break-words">Health Metrics Overview</CardTitle>
+              <CardDescription className="break-words">Track your key health metrics over time</CardDescription>
             </CardHeader>
-            <CardContent className="h-[300px]">
+            <CardContent className="h-[300px] overflow-hidden">
               <ChartContainer>
                 <Chart>
                   <ResponsiveContainer width="100%" height={300}>
@@ -196,10 +196,10 @@ export default function Dashboard() {
                     </LineChart>
                   </ResponsiveContainer>
                 </Chart>
-                <ChartLegend>
-                  <ChartLegendItem name="Weight (kg)" color="#8884d8" />
-                  <ChartLegendItem name="Blood Pressure (systolic)" color="#82ca9d" />
-                  <ChartLegendItem name="Cholesterol (mg/dL)" color="#ffc658" />
+                <ChartLegend className="flex flex-wrap justify-center gap-4">
+                  <ChartLegendItem name="Weight (kg)" color="#8884d8" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Blood Pressure (systolic)" color="#82ca9d" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Cholesterol (mg/dL)" color="#ffc658" className="whitespace-nowrap" />
                 </ChartLegend>
               </ChartContainer>
             </CardContent>

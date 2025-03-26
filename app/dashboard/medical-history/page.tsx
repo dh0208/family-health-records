@@ -183,7 +183,10 @@ export default function MedicalHistory() {
   const handleDeleteRecord = () => {
     if (recordToDelete === null) return
 
-    setMedicalHistory(medicalHistory.filter((record) => record.id !== recordToDelete))
+    const recordToRemove = medicalHistory.find((record) => record.id === recordToDelete)
+    const updatedRecords = medicalHistory.filter((record) => record.id !== recordToDelete)
+
+    setMedicalHistory(updatedRecords)
     setIsDeleteDialogOpen(false)
     setRecordToDelete(null)
 
@@ -191,6 +194,21 @@ export default function MedicalHistory() {
       title: "Record deleted",
       description: "Medical record has been deleted successfully.",
       variant: "destructive",
+      action: (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setMedicalHistory((prev) => [...prev, recordToRemove])
+            toast({
+              title: "Record restored",
+              description: "Medical record has been restored successfully.",
+            })
+          }}
+        >
+          Undo
+        </Button>
+      ),
     })
   }
 
@@ -292,7 +310,7 @@ export default function MedicalHistory() {
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                              disabled={(date) => date < new Date()}
                               initialFocus
                             />
                           </PopoverContent>
@@ -370,7 +388,17 @@ export default function MedicalHistory() {
                       </FormItem>
                     )}
                   />
-                  <DialogFooter>
+                  <DialogFooter className="flex justify-between">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setIsAddDialogOpen(false)
+                        form.reset()
+                      }}
+                    >
+                      Cancel
+                    </Button>
                     <Button type="submit">Save Record</Button>
                   </DialogFooter>
                 </form>
@@ -461,7 +489,9 @@ export default function MedicalHistory() {
                       </div>
                       <div>
                         <div className="text-sm font-medium mb-1">Notes:</div>
-                        <div className="text-sm text-muted-foreground">{record.notes || "No notes available"}</div>
+                        <div className="text-sm text-muted-foreground break-words overflow-hidden">
+                          {record.notes || "No notes available"}
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -548,7 +578,9 @@ export default function MedicalHistory() {
                         </div>
                         <div>
                           <div className="text-sm font-medium mb-1">Notes:</div>
-                          <div className="text-sm text-muted-foreground">{record.notes || "No notes available"}</div>
+                          <div className="text-sm text-muted-foreground break-words overflow-hidden">
+                            {record.notes || "No notes available"}
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -634,7 +666,9 @@ export default function MedicalHistory() {
                         </div>
                         <div>
                           <div className="text-sm font-medium mb-1">Notes:</div>
-                          <div className="text-sm text-muted-foreground">{record.notes || "No notes available"}</div>
+                          <div className="text-sm text-muted-foreground break-words overflow-hidden">
+                            {record.notes || "No notes available"}
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -690,7 +724,7 @@ export default function MedicalHistory() {
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                          disabled={(date) => date < new Date()}
                           initialFocus
                         />
                       </PopoverContent>
@@ -764,7 +798,17 @@ export default function MedicalHistory() {
                   </FormItem>
                 )}
               />
-              <DialogFooter>
+              <DialogFooter className="flex justify-between">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsEditDialogOpen(false)
+                    editForm.reset()
+                  }}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit">Update Record</Button>
               </DialogFooter>
             </form>

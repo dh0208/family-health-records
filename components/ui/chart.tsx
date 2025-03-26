@@ -50,7 +50,7 @@ ChartTooltip.displayName = "ChartTooltip"
 
 const ChartLegend = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
-    return <div ref={ref} className={cn("flex items-center space-x-4", className)} {...props} />
+    return <div ref={ref} className={cn("flex flex-wrap items-center gap-4", className)} {...props} />
   },
 )
 ChartLegend.displayName = "ChartLegend"

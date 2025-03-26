@@ -238,7 +238,10 @@ export default function EmergencyContacts() {
   const handleDeleteContact = () => {
     if (contactToDelete === null) return
 
-    setEmergencyContacts(emergencyContacts.filter((contact) => contact.id !== contactToDelete))
+    const contactToRemove = emergencyContacts.find((contact) => contact.id === contactToDelete)
+    const updatedContacts = emergencyContacts.filter((contact) => contact.id !== contactToDelete)
+
+    setEmergencyContacts(updatedContacts)
     setIsDeleteDialogOpen(false)
     setContactToDelete(null)
 
@@ -246,6 +249,21 @@ export default function EmergencyContacts() {
       title: "Contact deleted",
       description: "Emergency contact has been deleted successfully.",
       variant: "destructive",
+      action: (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setEmergencyContacts((prev) => [...prev, contactToRemove])
+            toast({
+              title: "Contact restored",
+              description: "Emergency contact has been restored successfully.",
+            })
+          }}
+        >
+          Undo
+        </Button>
+      ),
     })
   }
 
@@ -417,7 +435,17 @@ export default function EmergencyContacts() {
                     </FormItem>
                   )}
                 />
-                <DialogFooter>
+                <DialogFooter className="flex justify-between">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setIsAddDialogOpen(false)
+                      form.reset()
+                    }}
+                  >
+                    Cancel
+                  </Button>
                   <Button type="submit">Save Contact</Button>
                 </DialogFooter>
               </form>
@@ -515,7 +543,7 @@ export default function EmergencyContacts() {
                     {contact.address && (
                       <div className="flex items-center text-sm">
                         <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>{contact.address}</span>
+                        <span className="break-words overflow-hidden">{contact.address}</span>
                       </div>
                     )}
                     {contact.notes && (
@@ -534,7 +562,7 @@ export default function EmergencyContacts() {
                         >
                           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                         </svg>
-                        <span>{contact.notes}</span>
+                        <span className="break-words overflow-hidden">{contact.notes}</span>
                       </div>
                     )}
                   </div>
@@ -687,7 +715,17 @@ export default function EmergencyContacts() {
                   </FormItem>
                 )}
               />
-              <DialogFooter>
+              <DialogFooter className="flex justify-between">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsEditDialogOpen(false)
+                    editForm.reset()
+                  }}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit">Update Contact</Button>
               </DialogFooter>
             </form>

@@ -34,6 +34,21 @@ export default function DashboardLayout({
   const [isMounted, setIsMounted] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
+  // Add state for tracking if the sidebar is open on mobile
+  const [openMobile, setOpenMobile] = useState(false)
+
+  // Make sure mobile menu state updates properly
+  useEffect(() => {
+    if (openMobile) {
+      document.body.classList.add("overflow-hidden")
+    } else {
+      document.body.classList.remove("overflow-hidden")
+    }
+    return () => {
+      document.body.classList.remove("overflow-hidden")
+    }
+  }, [openMobile])
+
   useEffect(() => {
     setIsMounted(true)
   }, [])
@@ -60,7 +75,7 @@ export default function DashboardLayout({
   ]
 
   return (
-    <SidebarProvider>
+    <SidebarProvider openMobile={openMobile} onOpenChange={setOpenMobile}>
       <div className="flex min-h-screen">
         <Sidebar>
           <SidebarHeader className="border-b p-4">
@@ -112,7 +127,7 @@ export default function DashboardLayout({
                   variant="ghost"
                   size="icon"
                   className="md:hidden mr-2"
-                  onClick={() => setIsMobileOpen(!isMobileOpen)}
+                  onClick={() => setOpenMobile(!openMobile)}
                 >
                   <Menu className="h-5 w-5" />
                   <span className="sr-only">Toggle menu</span>
@@ -124,7 +139,9 @@ export default function DashboardLayout({
                 </div>
               </div>
             </header>
-            <main className="flex-1 container py-6">{children}</main>
+            <main className="flex-1 container py-6 overflow-x-hidden">
+              <div className="break-words">{children}</div>
+            </main>
           </div>
         </SidebarInset>
       </div>

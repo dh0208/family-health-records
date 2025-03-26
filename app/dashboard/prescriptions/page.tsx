@@ -251,7 +251,10 @@ export default function Prescriptions() {
   const handleDeletePrescription = () => {
     if (prescriptionToDelete === null) return
 
-    setPrescriptions(prescriptions.filter((prescription) => prescription.id !== prescriptionToDelete))
+    const prescriptionToRemove = prescriptions.find((prescription) => prescription.id === prescriptionToDelete)
+    const updatedPrescriptions = prescriptions.filter((prescription) => prescription.id !== prescriptionToDelete)
+
+    setPrescriptions(updatedPrescriptions)
     setIsDeleteDialogOpen(false)
     setPrescriptionToDelete(null)
 
@@ -259,6 +262,21 @@ export default function Prescriptions() {
       title: "Prescription deleted",
       description: "Prescription has been deleted successfully.",
       variant: "destructive",
+      action: (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setPrescriptions((prev) => [...prev, prescriptionToRemove])
+            toast({
+              title: "Prescription restored",
+              description: "Prescription has been restored successfully.",
+            })
+          }}
+        >
+          Undo
+        </Button>
+      ),
     })
   }
 
@@ -507,7 +525,17 @@ export default function Prescriptions() {
                       )}
                     />
                   </div>
-                  <DialogFooter>
+                  <DialogFooter className="flex justify-between">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setIsAddDialogOpen(false)
+                        form.reset()
+                      }}
+                    >
+                      Cancel
+                    </Button>
                     <Button type="submit">Save Prescription</Button>
                   </DialogFooter>
                 </form>
@@ -615,7 +643,7 @@ export default function Prescriptions() {
                       <div className="space-y-3">
                         <div>
                           <div className="text-sm font-medium mb-1">Notes:</div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-sm text-muted-foreground break-words overflow-hidden">
                             {prescription.notes || "No notes available"}
                           </div>
                         </div>
@@ -728,7 +756,7 @@ export default function Prescriptions() {
                         <div className="space-y-3">
                           <div>
                             <div className="text-sm font-medium mb-1">Notes:</div>
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-sm text-muted-foreground break-words overflow-hidden">
                               {prescription.notes || "No notes available"}
                             </div>
                           </div>
@@ -835,7 +863,7 @@ export default function Prescriptions() {
                         <div className="space-y-3">
                           <div>
                             <div className="text-sm font-medium mb-1">Notes:</div>
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-sm text-muted-foreground break-words overflow-hidden">
                               {prescription.notes || "No notes available"}
                             </div>
                           </div>
@@ -1062,7 +1090,17 @@ export default function Prescriptions() {
                   )}
                 />
               </div>
-              <DialogFooter>
+              <DialogFooter className="flex justify-between">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsEditDialogOpen(false)
+                    editForm.reset()
+                  }}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit">Update Prescription</Button>
               </DialogFooter>
             </form>

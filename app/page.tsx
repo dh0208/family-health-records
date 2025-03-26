@@ -30,7 +30,8 @@ export default function Home() {
                     Secure Family Health Records Management
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Keep your family's health information organized, accessible, and secure in one place.
+                    Your secure digital hub for organizing and tracking your family's complete health records. Easily
+                    manage medical history, prescriptions, allergies, and more in one centralized platform.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">

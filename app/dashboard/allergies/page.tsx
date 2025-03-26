@@ -195,7 +195,10 @@ export default function Allergies() {
   const handleDeleteAllergy = () => {
     if (allergyToDelete === null) return
 
-    setAllergies(allergies.filter((allergy) => allergy.id !== allergyToDelete))
+    const allergyToRemove = allergies.find((allergy) => allergy.id === allergyToDelete)
+    const updatedAllergies = allergies.filter((allergy) => allergy.id !== allergyToDelete)
+
+    setAllergies(updatedAllergies)
     setIsDeleteDialogOpen(false)
     setAllergyToDelete(null)
 
@@ -203,6 +206,21 @@ export default function Allergies() {
       title: "Allergy deleted",
       description: "Allergy has been deleted successfully.",
       variant: "destructive",
+      action: (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setAllergies((prev) => [...prev, allergyToRemove])
+            toast({
+              title: "Allergy restored",
+              description: "Allergy has been restored successfully.",
+            })
+          }}
+        >
+          Undo
+        </Button>
+      ),
     })
   }
 
@@ -444,7 +462,17 @@ export default function Allergies() {
                       </FormItem>
                     )}
                   />
-                  <DialogFooter>
+                  <DialogFooter className="flex justify-between">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setIsAddDialogOpen(false)
+                        form.reset()
+                      }}
+                    >
+                      Cancel
+                    </Button>
                     <Button type="submit">Save Allergy</Button>
                   </DialogFooter>
                 </form>
@@ -520,7 +548,7 @@ export default function Allergies() {
                 <div className="space-y-3">
                   <div>
                     <div className="text-sm font-medium mb-1">Symptoms:</div>
-                    <div className="text-sm text-muted-foreground">{allergy.symptoms}</div>
+                    <div className="text-sm text-muted-foreground break-words overflow-hidden">{allergy.symptoms}</div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -539,7 +567,9 @@ export default function Allergies() {
                       {allergy.treatment && (
                         <div>
                           <div className="text-sm font-medium mb-1">Treatment:</div>
-                          <div className="text-sm text-muted-foreground">{allergy.treatment}</div>
+                          <div className="text-sm text-muted-foreground break-words overflow-hidden">
+                            {allergy.treatment}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -547,7 +577,7 @@ export default function Allergies() {
                   {allergy.notes && (
                     <div>
                       <div className="text-sm font-medium mb-1">Notes:</div>
-                      <div className="text-sm text-muted-foreground">{allergy.notes}</div>
+                      <div className="text-sm text-muted-foreground break-words overflow-hidden">{allergy.notes}</div>
                     </div>
                   )}
                 </div>
@@ -713,7 +743,17 @@ export default function Allergies() {
                   </FormItem>
                 )}
               />
-              <DialogFooter>
+              <DialogFooter className="flex justify-between">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsEditDialogOpen(false)
+                    editForm.reset()
+                  }}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit">Update Allergy</Button>
               </DialogFooter>
             </form>

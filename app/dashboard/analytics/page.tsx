@@ -88,7 +88,7 @@ export default function HealthAnalytics() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-x-hidden">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight">Health Analytics Dashboard</h2>
         <Select defaultValue={timeRange} onValueChange={setTimeRange}>
@@ -120,8 +120,8 @@ export default function HealthAnalytics() {
                 <CardTitle className="text-sm font-medium">Current Weight</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">68.0 kg</div>
-                <p className="text-xs text-muted-foreground">-2.0 kg from last year</p>
+                <div className="text-2xl font-bold break-words">68.0 kg</div>
+                <p className="text-xs text-muted-foreground break-words">-2.0 kg from last year</p>
               </CardContent>
             </Card>
             <Card>
@@ -129,8 +129,8 @@ export default function HealthAnalytics() {
                 <CardTitle className="text-sm font-medium">Blood Pressure</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">112/75 mmHg</div>
-                <p className="text-xs text-muted-foreground">-8 mmHg from last year</p>
+                <div className="text-2xl font-bold break-words">112/75 mmHg</div>
+                <p className="text-xs text-muted-foreground break-words">-8 mmHg from last year</p>
               </CardContent>
             </Card>
             <Card>
@@ -138,8 +138,8 @@ export default function HealthAnalytics() {
                 <CardTitle className="text-sm font-medium">Cholesterol</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">150 mg/dL</div>
-                <p className="text-xs text-muted-foreground">-30 mg/dL from last year</p>
+                <div className="text-2xl font-bold break-words">150 mg/dL</div>
+                <p className="text-xs text-muted-foreground break-words">-30 mg/dL from last year</p>
               </CardContent>
             </Card>
             <Card>
@@ -147,16 +147,16 @@ export default function HealthAnalytics() {
                 <CardTitle className="text-sm font-medium">Resting Heart Rate</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">63 bpm</div>
-                <p className="text-xs text-muted-foreground">-9 bpm from last year</p>
+                <div className="text-2xl font-bold break-words">63 bpm</div>
+                <p className="text-xs text-muted-foreground break-words">-9 bpm from last year</p>
               </CardContent>
             </Card>
           </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>Vital Signs Trends</CardTitle>
-              <CardDescription>Track your key health metrics over time</CardDescription>
+              <CardTitle className="break-words">Vital Signs Trends</CardTitle>
+              <CardDescription className="break-words">Track your key health metrics over time</CardDescription>
             </CardHeader>
             <CardContent className="h-[400px]">
               <ChartContainer>
@@ -204,11 +204,11 @@ export default function HealthAnalytics() {
                     </LineChart>
                   </ResponsiveContainer>
                 </Chart>
-                <ChartLegend>
-                  <ChartLegendItem name="Weight (kg)" color="#8884d8" />
-                  <ChartLegendItem name="Blood Pressure (systolic)" color="#82ca9d" />
-                  <ChartLegendItem name="Cholesterol (mg/dL)" color="#ffc658" />
-                  <ChartLegendItem name="Heart Rate (bpm)" color="#ff8042" />
+                <ChartLegend className="flex flex-wrap justify-center gap-4">
+                  <ChartLegendItem name="Weight (kg)" color="#8884d8" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Blood Pressure (systolic)" color="#82ca9d" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Cholesterol (mg/dL)" color="#ffc658" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Heart Rate (bpm)" color="#ff8042" className="whitespace-nowrap" />
                 </ChartLegend>
               </ChartContainer>
             </CardContent>
@@ -235,8 +235,8 @@ export default function HealthAnalytics() {
                     </BarChart>
                   </ResponsiveContainer>
                 </Chart>
-                <ChartLegend>
-                  <ChartLegendItem name="Adherence (%)" color="#8884d8" />
+                <ChartLegend className="flex flex-wrap justify-center gap-4">
+                  <ChartLegendItem name="Adherence (%)" color="#8884d8" className="whitespace-nowrap" />
                 </ChartLegend>
               </ChartContainer>
             </CardContent>
@@ -286,10 +286,10 @@ export default function HealthAnalytics() {
                     </AreaChart>
                   </ResponsiveContainer>
                 </Chart>
-                <ChartLegend>
-                  <ChartLegendItem name="Deep Sleep (hrs)" color="#8884d8" />
-                  <ChartLegendItem name="Light Sleep (hrs)" color="#82ca9d" />
-                  <ChartLegendItem name="REM Sleep (hrs)" color="#ffc658" />
+                <ChartLegend className="flex flex-wrap justify-center gap-4">
+                  <ChartLegendItem name="Deep Sleep (hrs)" color="#8884d8" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Light Sleep (hrs)" color="#82ca9d" className="whitespace-nowrap" />
+                  <ChartLegendItem name="REM Sleep (hrs)" color="#ffc658" className="whitespace-nowrap" />
                 </ChartLegend>
               </ChartContainer>
             </CardContent>
@@ -326,12 +326,13 @@ export default function HealthAnalytics() {
                       </PieChart>
                     </ResponsiveContainer>
                   </Chart>
-                  <ChartLegend>
+                  <ChartLegend className="flex flex-wrap justify-center gap-4">
                     {nutritionData.map((entry, index) => (
                       <ChartLegendItem
                         key={`legend-${index}`}
                         name={entry.name}
                         color={COLORS[index % COLORS.length]}
+                        className="whitespace-nowrap"
                       />
                     ))}
                   </ChartLegend>
@@ -365,8 +366,8 @@ export default function HealthAnalytics() {
                       </LineChart>
                     </ResponsiveContainer>
                   </Chart>
-                  <ChartLegend>
-                    <ChartLegendItem name="Daily Steps" color="#8884d8" />
+                  <ChartLegend className="flex flex-wrap justify-center gap-4">
+                    <ChartLegendItem name="Daily Steps" color="#8884d8" className="whitespace-nowrap" />
                   </ChartLegend>
                 </ChartContainer>
               </CardContent>
@@ -396,10 +397,10 @@ export default function HealthAnalytics() {
                     </BarChart>
                   </ResponsiveContainer>
                 </Chart>
-                <ChartLegend>
-                  <ChartLegendItem name="Cardio" color="#8884d8" />
-                  <ChartLegendItem name="Strength" color="#82ca9d" />
-                  <ChartLegendItem name="Flexibility" color="#ffc658" />
+                <ChartLegend className="flex flex-wrap justify-center gap-4">
+                  <ChartLegendItem name="Cardio" color="#8884d8" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Strength" color="#82ca9d" className="whitespace-nowrap" />
+                  <ChartLegendItem name="Flexibility" color="#ffc658" className="whitespace-nowrap" />
                 </ChartLegend>
               </ChartContainer>
             </CardContent>
